@@ -11,7 +11,18 @@ module Em
       end
 
       def client
+        raise 'Please run Em::Sessions.init(http_url, app) method' if @http_url.empty? && @app.empty?
         @client ||= Client.new @http_url, @app
+      end
+
+      def modify_url(url)
+        @http_url = url
+        @client = nil
+      end
+
+      def modify_app(app)
+        @app = app
+        @client = nil
       end
 
     private
