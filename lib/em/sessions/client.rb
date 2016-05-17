@@ -25,14 +25,14 @@ module Em
         return run_em 'put', run_http_url
       end
 
-      def get_by_token(user_token, app = nil)
+      def find_by_token(user_token, app = nil)
         app_name =  get_app_name app
         run_http_url = %Q{#{@http_url}/#{app_name}/get/#{ user_token }}
         return run_em 'get', run_http_url
       end
 
 
-      def get_by_id(id, app = nil)
+      def find_by_id(id, app = nil)
         app_name =  get_app_name app
         run_http_url = %Q{#{@http_url}/#{app_name}/soid/#{ id }}
         return run_em 'get', run_http_url

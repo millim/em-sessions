@@ -13,7 +13,7 @@ RSpec.describe 'test em sessions' do
     code, json  = Em::Sessions.client.create "id#{Time.now.to_i}", 60, '0.0.0.0'
     expect(code).to eq 200
 
-    code, json  = Em::Sessions.client.get_by_token json['token']
+    code, json  = Em::Sessions.client.find_by_token json['token']
     expect(code).to eq 200
     expect(json['id']).to eql id
   end
@@ -30,7 +30,7 @@ RSpec.describe 'test em sessions' do
 
     it 'set params' do
       code, json = @client.set_params_by_token @token, {name: '名字', age: '年龄'}
-      _, find_json = @client.get_by_token(@token)
+      _, find_json = @client.find_by_token(@token)
       expect(code).to eq 200
       expect(json).to eq find_json
       expect(find_json['d']['name']).to eql '名字'
@@ -44,7 +44,7 @@ RSpec.describe 'test em sessions' do
 
     it 'get sessions use id' do
       @client.create @id, 60, 'localhost'
-      code, json = @client.get_by_id @id
+      code, json = @client.find_by_id @id
       expect(code).to eq 200
       expect(json['sessions'].class).to eql Array
       expect(json['sessions'].size).to eql 2
