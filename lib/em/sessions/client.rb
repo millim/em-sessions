@@ -4,7 +4,7 @@ module Em
     class Client
 
 
-      attr_accessor :http_url, :app
+      attr_reader :http_url, :app
 
       def initialize(url, app)
         if url.nil? || app.nil?

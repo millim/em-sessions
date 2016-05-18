@@ -4,28 +4,23 @@ require 'em/sessions/client'
 module Em
   module Sessions
     class << self
-      attr_reader :http_url, :client, :app
-      def init(http_url = 'localhost:3000', app = 'weapp')
-        @http_url ||= http_url
+      attr_accessor :last_client, :url, :app
+
+
+      # if use init, every each call client, this client are same
+      def init(url = 'localhost:3000', app = 'weapp')
+        @url = url
         @app = app
       end
 
-      def client
-        raise 'Please run Em::Sessions.init(http_url, app) method' if @http_url.nil? && @app.nil?
-        @client ||= Client.new @http_url, @app
+      def client(url = nil, app = nil)
+        set_url = url.nil? ? @url : url
+        set_app = app.nil? ? @app : app
+        raise 'Please input url or app_name,such as: client("localhost:3000", "weapp")' if set_url.nil? || set_app.nil?
+        @last_client = Client.new set_url, set_app
+        @last_client
       end
 
-      def modify_url(url)
-        @http_url = url
-        @client = nil
-      end
-
-      def modify_app(app)
-        @app = app
-        @client = nil
-      end
-
-    private
     end
   end
 end

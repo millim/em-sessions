@@ -28,15 +28,19 @@ and run `bundle install` to install the dependency.
 # default: init(url = 'localhost:3000', app = 'weapp')
 Em::Sessions.init
 client = Em::Sessions.client
+
+or
+
+client = Em::Sessions.client 'localhost:3000', 'weapp'
 ```
 ## Notice ##
 client`s all methods return two params, one code, one json, such as:
 ```ruby
- client.create('1') # [200, {"token": "9kwi9wu429dkw8urkhr923jrekw32" ]
+ client.create '1' # [200, {"token": "9kwi9wu429dkw8urkhr923jrekw32" ]
 ```
 you can
 ```ruby
- code, json = client.create('1')
+ code, json = client.create '1'
  json['token'] # 9kwi9wu429dkw8urkhr923jrekw32
 ```
 
